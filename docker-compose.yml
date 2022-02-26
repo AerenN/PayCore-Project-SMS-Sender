@@ -1,0 +1,22 @@
+version: '3.1'
+
+services:
+  sms-service:
+    image: sms-service
+    build: ./
+    ports:
+      - "9000:9000"
+    restart: always
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3.8.3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
